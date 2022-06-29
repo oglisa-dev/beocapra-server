@@ -8,28 +8,48 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
-@Table(name = "Dobavljac")
+@Entity(name = "Dobavljac")
+@Table(
+        name = "Dobavljac",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "PIB_unique", columnNames = "PIB"),
+                @UniqueConstraint(name = "maticni_broj_unique", columnNames = "MaticniBroj")
+        }
+)
 public class Dobavljac implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "DobavljacID")
+    @SequenceGenerator(
+            name = "dobavljac_generator",
+            sequenceName = "dobavljac_generator",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.IDENTITY,
+            generator = "dobavljac_generator"
+    )
+    @Column(
+            name = "DobavljacID",
+            updatable = false
+    )
     private Long dobavljacID;
 
     @Column(name = "NazivDobavljaca")
     private String nazivDobavljaca;
 
-    @NonNull
-    @Column(name = "PIB",unique = true)
+    @Column(
+            name = "PIB",
+            nullable = false
+    )
     private String PIB;
 
-    @NonNull
     @Column(name = "ZiroRacun")
     private String ziroRacun;
 
-    @NonNull
-    @Column(name = "MaticniBroj",unique = true)
+    @Column(
+            name = "MaticniBroj",
+            nullable = false
+    )
     private String maticniBroj;
 
     @Column(name = "Email")

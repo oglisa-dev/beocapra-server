@@ -1,19 +1,40 @@
 package fon.bg.ac.rs.fpis.beocapra.model;
 
-import org.springframework.lang.NonNull;
-
 import javax.persistence.*;
 
 @Entity
+@Table(name = "JedinicaMere ")
 public class JedinicaMere {
 
     @Id
-    @Column(name = "JedinicaMereID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "JedinicaMereID",updatable = false)
     private Long jedinicaMereID;
 
-    @NonNull
-    @Column(name = "NazivJediniceMere")
+    @Column(name = "NazivJediniceMere",nullable = false)
     private String nazivJediniceMere;
 
+    public JedinicaMere(String nazivJediniceMere) {
+        this.nazivJediniceMere = nazivJediniceMere;
+    }
+
+    public JedinicaMere() {
+
+    }
+
+    public Long getJedinicaMereID() {
+        return jedinicaMereID;
+    }
+
+    public void setJedinicaMereID(Long jedinicaMereID) {
+        this.jedinicaMereID = jedinicaMereID;
+    }
+
+    public String getNazivJediniceMere() {
+        return nazivJediniceMere;
+    }
+
+    public void setNazivJediniceMere(String nazivJediniceMere) {
+        this.nazivJediniceMere = nazivJediniceMere;
+    }
 }
