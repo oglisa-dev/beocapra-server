@@ -26,6 +26,21 @@ public class HemijskaOsobinaEntity {
     @Column(name = "Sastojci")
     private String sastojci;
 
+    @ManyToOne(
+            targetEntity = ProizvodEntity.class,
+            fetch = FetchType.LAZY,
+            optional = false
+    )
+    private ProizvodEntity proizvod;
+
+    public ProizvodEntity getProizvod() {
+        return proizvod;
+    }
+
+    public void setProizvod(ProizvodEntity proizvod) {
+        this.proizvod = proizvod;
+    }
+
     public long getHemijskaOsobinaId() {
         return hemijskaOsobinaId;
     }

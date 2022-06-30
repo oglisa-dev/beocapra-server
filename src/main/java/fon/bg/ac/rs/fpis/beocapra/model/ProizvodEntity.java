@@ -3,6 +3,7 @@ package fon.bg.ac.rs.fpis.beocapra.model;
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -10,29 +11,63 @@ import java.util.Objects;
 public class ProizvodEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ProizvodID")
+    @Column(name = "ProizvodID", updatable = false)
     private long proizvodId;
-    @Basic
+    @Basic(optional = false)
     @Column(name = "NazivProizvoda")
     private String nazivProizvoda;
-    @Basic
+    @Basic(optional = false)
     @Column(name = "DatumProizvodnje")
     private Date datumProizvodnje;
-    @Basic
+    @Basic(optional = false)
     @Column(name = "Cena")
     private BigInteger cena;
-    @Basic
+    @Basic(optional = false)
     @Column(name = "VrstaProizvoda")
     private String vrstaProizvoda;
-    @Basic
+    @Basic(optional = false)
     @Column(name = "TrenutnoStanjeZaliha")
     private BigInteger trenutnoStanjeZaliha;
-    @Basic
+    @Basic(optional = false)
     @Column(name = "JedinicaMereID")
     private long jedinicaMereId;
-    @Basic
+    @Basic(optional = false)
     @Column(name = "TipProizvodaID")
     private long tipProizvodaId;
+
+    @OneToMany(
+            mappedBy = "proizvod",
+            fetch = FetchType.LAZY,
+            targetEntity = HemijskaOsobinaEntity.class,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Collection<HemijskaOsobinaEntity> hemijskeOsobine;
+
+    @OneToMany(
+            mappedBy = "proizvod",
+            fetch = FetchType.LAZY,
+            targetEntity = FizickaOsobinaEntity.class,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Collection<FizickaOsobinaEntity> fizickeOsobine;
+
+    public Collection<HemijskaOsobinaEntity> getHemijskeOsobine() {
+        return hemijskeOsobine;
+    }
+
+    public void setHemijskeOsobine(Collection<HemijskaOsobinaEntity> hemijskeOsobine) {
+        this.hemijskeOsobine = hemijskeOsobine;
+    }
+
+    public Collection<FizickaOsobinaEntity> getFizickeOsobine() {
+        return fizickeOsobine;
+    }
+
+    public void setFizickeOsobine(Collection<FizickaOsobinaEntity> fizickeOsobine) {
+        this.fizickeOsobine = fizickeOsobine;
+    }
 
     public long getProizvodId() {
         return proizvodId;
@@ -110,4 +145,29 @@ public class ProizvodEntity {
     public int hashCode() {
         return Objects.hash(proizvodId, nazivProizvoda, datumProizvodnje, cena, vrstaProizvoda, trenutnoStanjeZaliha, jedinicaMereId, tipProizvodaId);
     }
+
+    public ProizvodEntity addHemijskaOsobina(HemijskaOsobinaEntity hemijskaOsobinaEntity) {
+        this.hemijskeOsobine.add(hemijskaOsobinaEntity);
+        hemijskaOsobinaEntity.setProizvod(this);
+        return this;
+    }
+
+    public ProizvodEntity removeHemijskaOsobina(HemijskaOsobinaEntity hemijskaOsobinaEntity) {
+        // because of orphanRemoval = true -> will be deleted
+        this.hemijskeOsobine.remove(hemijskaOsobinaEntity);
+        return this;
+    }
+
+    public ProizvodEntity addFizickaOsobina(FizickaOsobinaEntity fizickaOsobinaEntity) {
+        this.fizickeOsobine.add(fizickaOsobinaEntity);
+        fizickaOsobinaEntity.setProizvod(this);
+        return this;
+    }
+
+    public ProizvodEntity removeFizickaOsobina(FizickaOsobinaEntity fizickaOsobinaEntity) {
+        // because of orphanRemoval = true -> will be deleted
+        this.fizickeOsobine.remove(fizickaOsobinaEntity);
+        return this;
+    }
+
 }
