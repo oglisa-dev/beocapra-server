@@ -2,7 +2,8 @@ package fon.bg.ac.rs.fpis.beocapra.controller;
 
 import fon.bg.ac.rs.fpis.beocapra.dto.ProizvodDTO;
 import fon.bg.ac.rs.fpis.beocapra.exceptions.ProizvodNotFoundException;
-import fon.bg.ac.rs.fpis.beocapra.service.ProizvodService;
+import fon.bg.ac.rs.fpis.beocapra.service.ProizvodServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
@@ -15,10 +16,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/proizvod")
+@RequiredArgsConstructor
 public class ProizvodController {
 
     @Autowired
-    private ProizvodService service;
+    private ProizvodServiceImpl service;
 
     @GetMapping("/{id}")
     public ProizvodDTO getProizvodById(@PathVariable long id) {
