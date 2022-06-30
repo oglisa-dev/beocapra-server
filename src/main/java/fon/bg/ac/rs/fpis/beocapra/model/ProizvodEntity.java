@@ -28,12 +28,19 @@ public class ProizvodEntity {
     @Basic(optional = false)
     @Column(name = "TrenutnoStanjeZaliha")
     private BigInteger trenutnoStanjeZaliha;
-    @Basic(optional = false)
-    @Column(name = "JedinicaMereID")
-    private long jedinicaMereId;
-    @Basic(optional = false)
-    @Column(name = "TipProizvodaID")
-    private long tipProizvodaId;
+
+    @ManyToOne(
+            targetEntity = JedinicaMereEntity.class,
+            fetch = FetchType.EAGER
+    )
+    @JoinColumn(name = "JedinicaMereID")
+    private JedinicaMereEntity jedinicaMere;
+    @ManyToOne(
+            targetEntity = TipProizvodaEntity.class,
+            fetch = FetchType.EAGER
+    )
+    @JoinColumn(name = "TipProizvodaID")
+    private TipProizvodaEntity tipProizvoda;
 
     @OneToMany(
             mappedBy = "proizvod",
@@ -67,6 +74,22 @@ public class ProizvodEntity {
 
     public void setFizickeOsobine(Collection<FizickaOsobinaEntity> fizickeOsobine) {
         this.fizickeOsobine = fizickeOsobine;
+    }
+
+    public JedinicaMereEntity getJedinicaMere() {
+        return jedinicaMere;
+    }
+
+    public void setJedinicaMere(JedinicaMereEntity jedinicaMere) {
+        this.jedinicaMere = jedinicaMere;
+    }
+
+    public TipProizvodaEntity getTipProizvoda() {
+        return tipProizvoda;
+    }
+
+    public void setTipProizvoda(TipProizvodaEntity tipProizvoda) {
+        this.tipProizvoda = tipProizvoda;
     }
 
     public long getProizvodId() {
@@ -117,33 +140,17 @@ public class ProizvodEntity {
         this.trenutnoStanjeZaliha = trenutnoStanjeZaliha;
     }
 
-    public long getJedinicaMereId() {
-        return jedinicaMereId;
-    }
-
-    public void setJedinicaMereId(long jedinicaMereId) {
-        this.jedinicaMereId = jedinicaMereId;
-    }
-
-    public long getTipProizvodaId() {
-        return tipProizvodaId;
-    }
-
-    public void setTipProizvodaId(long tipProizvodaId) {
-        this.tipProizvodaId = tipProizvodaId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProizvodEntity that = (ProizvodEntity) o;
-        return proizvodId == that.proizvodId && jedinicaMereId == that.jedinicaMereId && tipProizvodaId == that.tipProizvodaId && Objects.equals(nazivProizvoda, that.nazivProizvoda) && Objects.equals(datumProizvodnje, that.datumProizvodnje) && Objects.equals(cena, that.cena) && Objects.equals(vrstaProizvoda, that.vrstaProizvoda) && Objects.equals(trenutnoStanjeZaliha, that.trenutnoStanjeZaliha);
+        return proizvodId == that.proizvodId && Objects.equals(nazivProizvoda, that.nazivProizvoda) && Objects.equals(datumProizvodnje, that.datumProizvodnje) && Objects.equals(cena, that.cena) && Objects.equals(vrstaProizvoda, that.vrstaProizvoda) && Objects.equals(trenutnoStanjeZaliha, that.trenutnoStanjeZaliha);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(proizvodId, nazivProizvoda, datumProizvodnje, cena, vrstaProizvoda, trenutnoStanjeZaliha, jedinicaMereId, tipProizvodaId);
+        return Objects.hash(proizvodId, nazivProizvoda, datumProizvodnje, cena, vrstaProizvoda, trenutnoStanjeZaliha);
     }
 
     public ProizvodEntity addHemijskaOsobina(HemijskaOsobinaEntity hemijskaOsobinaEntity) {
