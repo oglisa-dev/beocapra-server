@@ -20,6 +20,16 @@ public class DobavljacDTO implements DTO<DobavljacEntity>, Serializable {
     private String ziroRacun;
     private String website;
 
+    public DobavljacDTO(DobavljacEntity dobavljac) {
+        this.dobavljacId = dobavljac.getDobavljacId();
+        this.email = dobavljac.getEmail();
+        this.maticniBroj = dobavljac.getMaticniBroj();
+        this.nazivDobavljaca = dobavljac.getNazivDobavljaca();
+        this.pib = dobavljac.getPib();
+        this.ziroRacun = dobavljac.getZiroRacun();
+        this.website = dobavljac.getWebsite();
+    }
+
     @Override
     public DobavljacEntity fromDTO() {
         DobavljacEntity dobavljac = new DobavljacEntity();

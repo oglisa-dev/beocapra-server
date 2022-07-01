@@ -15,6 +15,6 @@ public class PrijemnicaDobavljacaServiceImpl implements PrijemnicaDobavljacaServ
     @Override
     public PrijemnicaDobavljacaDTO savePrijemnica(PrijemnicaDobavljacaEntity prijemnicaDobavljaca) {
         PrijemnicaDobavljacaEntity prijemnica = this.repository.save(prijemnicaDobavljaca);
-        
+        return new PrijemnicaDobavljacaDTO(prijemnica);
     }
 }

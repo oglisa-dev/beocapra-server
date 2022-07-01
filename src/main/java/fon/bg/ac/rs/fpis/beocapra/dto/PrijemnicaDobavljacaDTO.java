@@ -23,6 +23,21 @@ public class PrijemnicaDobavljacaDTO implements DTO<PrijemnicaDobavljacaEntity>,
     private DobavljacDTO dobavljac;
     private Collection<StavkaPrijemniceDobavljacaDTO> stavke;
 
+    public PrijemnicaDobavljacaDTO(PrijemnicaDobavljacaEntity prijemnica) {
+        this.datumPrijema = prijemnica.getDatumPrijema();
+        this.prijemnicaDobavljacaId = prijemnica.getPrijemnicaDobavljacaId();
+        this.napomena = prijemnica.getNapomena();
+        this.tovarniList = new TovarniListDTO(prijemnica.getTovarniList());
+        this.radnik = new RadnikDTO(prijemnica.getRadnik());
+        this.dobavljac = new DobavljacDTO(prijemnica.getDobavljac());
+        if (prijemnica.getStavke() != null) {
+            this.stavke = prijemnica.getStavke()
+                    .stream()
+                    .map(stavka -> new StavkaPrijemniceDobavljacaDTO(stavka))
+                    .collect(Collectors.toList());
+        }
+    }
+
     @Override
     public PrijemnicaDobavljacaEntity fromDTO() {
         PrijemnicaDobavljacaEntity prijemnicaDobavljaca = new PrijemnicaDobavljacaEntity();

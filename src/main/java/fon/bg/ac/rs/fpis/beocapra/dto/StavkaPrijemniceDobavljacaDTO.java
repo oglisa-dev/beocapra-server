@@ -19,6 +19,14 @@ public class StavkaPrijemniceDobavljacaDTO implements DTO<StavkaPrijemniceDobavl
     private BigInteger vrednost;
     private Long proizvodId;
 
+    public StavkaPrijemniceDobavljacaDTO(StavkaPrijemniceDobavljacaEntity stavkaPrijemniceDobavljacaEntity) {
+        this.prijemnicaDobavljacaId = stavkaPrijemniceDobavljacaEntity.getPrijemnicaDobavljacaId();
+        this.stavkaPrijemniceDobavljacaId = stavkaPrijemniceDobavljacaEntity.getStavkaPrijemniceDobavljacaId();
+        this.kolicina = stavkaPrijemniceDobavljacaEntity.getKolicina();
+        this.vrednost = stavkaPrijemniceDobavljacaEntity.getVrednost();
+        this.proizvodId = stavkaPrijemniceDobavljacaEntity.getProizvodId();
+    }
+
     @Override
     public StavkaPrijemniceDobavljacaEntity fromDTO() {
         StavkaPrijemniceDobavljacaEntity stavka = new StavkaPrijemniceDobavljacaEntity();
