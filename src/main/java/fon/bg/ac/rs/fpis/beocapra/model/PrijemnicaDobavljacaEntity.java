@@ -50,8 +50,8 @@ public class PrijemnicaDobavljacaEntity {
     )
     private TovarniListEntity tovarniList;
     @OneToMany(
-            targetEntity = StavkaOtpremiceDobavljacaEntity.class,
-            mappedBy = "prijemnica",
+            targetEntity = StavkaPrijemniceDobavljacaEntity.class,
+            mappedBy = "prijemnicaDobavljaca",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             orphanRemoval = true

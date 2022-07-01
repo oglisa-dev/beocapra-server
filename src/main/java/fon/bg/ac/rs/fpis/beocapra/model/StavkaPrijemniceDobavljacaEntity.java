@@ -37,7 +37,12 @@ public class StavkaPrijemniceDobavljacaEntity {
         fetch = FetchType.LAZY,
         optional = false
     )
-    @JoinColumn(name = "PrijemnicaDobavljacaID",nullable = false)
+    @JoinColumn(
+            name = "PrijemnicaDobavljacaID",
+            nullable = false,
+            insertable = false,
+            updatable = false
+    )
     private PrijemnicaDobavljacaEntity prijemnicaDobavljaca;
 
     @Override
