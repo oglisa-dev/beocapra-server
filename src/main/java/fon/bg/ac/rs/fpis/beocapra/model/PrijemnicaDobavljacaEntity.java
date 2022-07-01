@@ -1,11 +1,17 @@
 package fon.bg.ac.rs.fpis.beocapra.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 @Table(name = "PrijemnicaDobavljaca", schema = "public", catalog = "beocapra-db")
+@Data @NoArgsConstructor @AllArgsConstructor
 public class PrijemnicaDobavljacaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -17,62 +23,51 @@ public class PrijemnicaDobavljacaEntity {
     @Basic
     @Column(name = "Napomena")
     private String napomena;
-    @Basic
-    @Column(name = "DobavljacID")
-    private long dobavljacId;
-    @Basic
-    @Column(name = "RadnikID")
-    private long radnikId;
-    @Basic
-    @Column(name = "TovarniListID")
-    private long tovarniListId;
+    @ManyToOne(
+            targetEntity = DobavljacEntity.class,
+            fetch = FetchType.LAZY,
+            optional = false
+    )
+    @JoinColumn(name = "DobavljacID", nullable = false)
+    private DobavljacEntity dobavljac;
+    @ManyToOne(
+            targetEntity = RadnikEntity.class,
+            fetch = FetchType.LAZY,
+            optional = false
+    )
+    @JoinColumn(name = "RadnikID", nullable = false)
+    private RadnikEntity radnik;
+    @OneToOne(
+            targetEntity = TovarniListEntity.class,
+            fetch = FetchType.LAZY,
+            optional = false,
+            orphanRemoval = false,
+            cascade = CascadeType.ALL
+    )
+    @JoinColumn(
+            name = "TovarniListID",
+            nullable = false
+    )
+    private TovarniListEntity tovarniList;
+    @OneToMany(
+            targetEntity = StavkaOtpremiceDobavljacaEntity.class,
+            mappedBy = "prijemnica",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Collection<StavkaPrijemniceDobavljacaEntity> stavke;
 
-    public long getPrijemnicaDobavljacaId() {
-        return prijemnicaDobavljacaId;
+    public PrijemnicaDobavljacaEntity addStavka(StavkaPrijemniceDobavljacaEntity stavka) {
+        if (stavka == null) throw new RuntimeException("Stavka cannot be null!");
+        this.stavke.add(stavka);
+        return this;
     }
 
-    public void setPrijemnicaDobavljacaId(long prijemnicaDobavljacaId) {
-        this.prijemnicaDobavljacaId = prijemnicaDobavljacaId;
-    }
-
-    public Date getDatumPrijema() {
-        return datumPrijema;
-    }
-
-    public void setDatumPrijema(Date datumPrijema) {
-        this.datumPrijema = datumPrijema;
-    }
-
-    public String getNapomena() {
-        return napomena;
-    }
-
-    public void setNapomena(String napomena) {
-        this.napomena = napomena;
-    }
-
-    public long getDobavljacId() {
-        return dobavljacId;
-    }
-
-    public void setDobavljacId(long dobavljacId) {
-        this.dobavljacId = dobavljacId;
-    }
-
-    public long getRadnikId() {
-        return radnikId;
-    }
-
-    public void setRadnikId(long radnikId) {
-        this.radnikId = radnikId;
-    }
-
-    public long getTovarniListId() {
-        return tovarniListId;
-    }
-
-    public void setTovarniListId(long tovarniListId) {
-        this.tovarniListId = tovarniListId;
+    public PrijemnicaDobavljacaEntity removeStavka(StavkaPrijemniceDobavljacaEntity stavka) {
+        if (stavka == null) throw new RuntimeException("Stavka cannot be null!");
+        this.stavke.remove(stavka);
+        return this;
     }
 
     @Override
@@ -80,11 +75,11 @@ public class PrijemnicaDobavljacaEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PrijemnicaDobavljacaEntity that = (PrijemnicaDobavljacaEntity) o;
-        return prijemnicaDobavljacaId == that.prijemnicaDobavljacaId && dobavljacId == that.dobavljacId && radnikId == that.radnikId && tovarniListId == that.tovarniListId && Objects.equals(datumPrijema, that.datumPrijema) && Objects.equals(napomena, that.napomena);
+        return prijemnicaDobavljacaId == that.prijemnicaDobavljacaId && Objects.equals(datumPrijema, that.datumPrijema) && Objects.equals(napomena, that.napomena);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(prijemnicaDobavljacaId, datumPrijema, napomena, dobavljacId, radnikId, tovarniListId);
+        return Objects.hash(prijemnicaDobavljacaId, datumPrijema, napomena);
     }
 }

@@ -1,11 +1,17 @@
 package fon.bg.ac.rs.fpis.beocapra.model;
 
+import fon.bg.ac.rs.fpis.beocapra.dto.PrijemnicaDobavljacaDTO;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
 
 @Entity
 @Table(name = "TovarniList", schema = "public", catalog = "beocapra-db")
+@Data @NoArgsConstructor @AllArgsConstructor
 public class TovarniListEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -17,6 +23,14 @@ public class TovarniListEntity {
     @Basic
     @Column(name = "DatumSlanja")
     private Date datumSlanja;
+    @OneToOne(
+            mappedBy = "tovarniList",
+            optional = true,
+            targetEntity = PrijemnicaDobavljacaEntity.class,
+            fetch = FetchType.LAZY,
+            orphanRemoval = false
+    )
+    private PrijemnicaDobavljacaEntity prijemnicaDobavljaca;
 
     public long getTovarniListId() {
         return tovarniListId;

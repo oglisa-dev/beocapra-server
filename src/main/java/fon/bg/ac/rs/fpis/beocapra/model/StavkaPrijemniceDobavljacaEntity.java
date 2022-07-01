@@ -1,5 +1,10 @@
 package fon.bg.ac.rs.fpis.beocapra.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.Objects;
@@ -7,6 +12,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "StavkaPrijemniceDobavljaca", schema = "public", catalog = "beocapra-db")
 @IdClass(StavkaPrijemniceDobavljacaEntityPK.class)
+@Data @NoArgsConstructor @AllArgsConstructor
 public class StavkaPrijemniceDobavljacaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -25,46 +31,14 @@ public class StavkaPrijemniceDobavljacaEntity {
     @Basic
     @Column(name = "ProizvodID")
     private long proizvodId;
-
-    public long getPrijemnicaDobavljacaId() {
-        return prijemnicaDobavljacaId;
-    }
-
-    public void setPrijemnicaDobavljacaId(long prijemnicaDobavljacaId) {
-        this.prijemnicaDobavljacaId = prijemnicaDobavljacaId;
-    }
-
-    public long getStavkaPrijemniceDobavljacaId() {
-        return stavkaPrijemniceDobavljacaId;
-    }
-
-    public void setStavkaPrijemniceDobavljacaId(long stavkaPrijemniceDobavljacaId) {
-        this.stavkaPrijemniceDobavljacaId = stavkaPrijemniceDobavljacaId;
-    }
-
-    public BigInteger getKolicina() {
-        return kolicina;
-    }
-
-    public void setKolicina(BigInteger kolicina) {
-        this.kolicina = kolicina;
-    }
-
-    public BigInteger getVrednost() {
-        return vrednost;
-    }
-
-    public void setVrednost(BigInteger vrednost) {
-        this.vrednost = vrednost;
-    }
-
-    public long getProizvodId() {
-        return proizvodId;
-    }
-
-    public void setProizvodId(long proizvodId) {
-        this.proizvodId = proizvodId;
-    }
+    @JsonIgnore
+    @ManyToOne(
+        targetEntity = PrijemnicaDobavljacaEntity.class,
+        fetch = FetchType.LAZY,
+        optional = false
+    )
+    @JoinColumn(name = "PrijemnicaDobavljacaID",nullable = false)
+    private PrijemnicaDobavljacaEntity prijemnicaDobavljaca;
 
     @Override
     public boolean equals(Object o) {
