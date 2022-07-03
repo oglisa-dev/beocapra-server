@@ -1,5 +1,6 @@
 package fon.bg.ac.rs.fpis.beocapra.security;
 
+import fon.bg.ac.rs.fpis.beocapra.filter.CorsFilter;
 import fon.bg.ac.rs.fpis.beocapra.filter.CustomAuthenticationFilter;
 import fon.bg.ac.rs.fpis.beocapra.filter.CustomAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.servlet.Filter;
 
 @Configuration
 @EnableWebSecurity @RequiredArgsConstructor
@@ -34,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().anyRequest().permitAll();
         http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new CorsFilter(), CustomAuthenticationFilter.class);
     }
 
     @Bean
