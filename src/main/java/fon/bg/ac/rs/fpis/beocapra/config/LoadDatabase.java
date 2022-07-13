@@ -13,6 +13,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Configuration
 public class LoadDatabase {
@@ -117,6 +120,29 @@ public class LoadDatabase {
             proizvod4.setTrenutnoStanjeZaliha(BigInteger.valueOf(121));
             proizvod4.setJedinicaMere(jedinicaMere1);
             proizvodRepository.save(proizvod4);
+
+            List<ProizvodEntity> proizvodEntityList = IntStream
+                    .rangeClosed(5,205)
+                    .mapToObj(ind -> {
+                        ProizvodEntity proizvod = new ProizvodEntity();
+                        proizvod.setTipProizvoda(tipProizvoda1);
+                        long cena = Math.round(Math.floor(Math.random() * 5000));
+                        proizvod.setCena(BigInteger.valueOf(cena));
+                        proizvod.setHemijskeOsobine(new ArrayList<>());
+                        proizvod.setFizickeOsobine(new ArrayList<>());
+                        proizvod.setNazivProizvoda("Proizvod" + ind);
+                        proizvod.setDatumProizvodnje(new Date(new java.util.Date().getTime() - 2100 * 60 * 1000));
+                        long vrsta_proizvoda = Math.round(Math.random() * 10) + 1;
+                        proizvod.setVrstaProizvoda("VRSTA_PROIZVODA_" + vrsta_proizvoda);
+                        long zalihe = Math.round(Math.floor(Math.random() * 12000));
+                        proizvod.setTrenutnoStanjeZaliha(BigInteger.valueOf(zalihe));
+                        double jedinicaMere = Math.floor(Math.random() * 2) + 1;
+                        if (jedinicaMere == 1) proizvod.setJedinicaMere(jedinicaMere1);
+                        else proizvod.setJedinicaMere(jedinicaMere2);
+                        return proizvod;
+                    })
+                    .collect(Collectors.toList());
+            proizvodRepository.saveAll(proizvodEntityList);
         };
     }
 
