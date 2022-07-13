@@ -5,6 +5,9 @@ import fon.bg.ac.rs.fpis.beocapra.model.ProizvodEntity;
 import fon.bg.ac.rs.fpis.beocapra.repository.ProizvodRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -43,6 +46,21 @@ public class ProizvodServiceImpl implements ProizvodService {
                 .map(entity -> new ProizvodDTO(entity))
                 .collect(Collectors.toList());
         return Optional.of(dtos);
+    }
+
+    @Override
+    public List<ProizvodDTO> getProductsWithSorting(String field) {
+        List<ProizvodEntity> proizvodi = proizvodRepository.findAll(Sort.by(Sort.Direction.ASC,field));
+        return proizvodi
+                .stream()
+                .map(entity -> new ProizvodDTO(entity))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<ProizvodEntity> getProductsWithPagination(int offset, int pageSize) {
+        Page<ProizvodEntity> page = proizvodRepository.findAll(PageRequest.of(offset,pageSize));
+        return page;
     }
 
 }
