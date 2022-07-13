@@ -4,11 +4,7 @@ import fon.bg.ac.rs.fpis.beocapra.dto.ProizvodDTO;
 import fon.bg.ac.rs.fpis.beocapra.exceptions.ProizvodNotFoundException;
 import fon.bg.ac.rs.fpis.beocapra.model.ProizvodEntity;
 import fon.bg.ac.rs.fpis.beocapra.service.ProizvodServiceImpl;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -16,11 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/proizvod")
@@ -49,8 +43,14 @@ public class ProizvodController {
     }
 
     @GetMapping("/pagination/{offset}/{pageSize}")
-    public ResponseEntity<Page<ProizvodEntity>> getAllWithSort(@PathVariable int offset,@PathVariable int pageSize) {
+    public ResponseEntity<Page<ProizvodEntity>> getAllWithPagination(@PathVariable int offset,@PathVariable int pageSize) {
         Page<ProizvodEntity> page = this.service.getProductsWithPagination(offset, pageSize);
+        return ResponseEntity.ok().body(page);
+    }
+
+    @GetMapping("/pagination_and_sort/{offset}/{pageSize}/{field}")
+    public ResponseEntity<Page<ProizvodEntity>> getAllWithPaginationAndSort(@PathVariable int offset,@PathVariable int pageSize,@PathVariable String field) {
+        Page<ProizvodEntity> page = this.service.getProductsWithPaginationAndSorting(field, offset, pageSize);
         return ResponseEntity.ok().body(page);
     }
 

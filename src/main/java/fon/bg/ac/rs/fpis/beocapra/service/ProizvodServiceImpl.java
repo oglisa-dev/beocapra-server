@@ -63,4 +63,9 @@ public class ProizvodServiceImpl implements ProizvodService {
         return page;
     }
 
+    @Override
+    public Page<ProizvodEntity> getProductsWithPaginationAndSorting(String field, int offset, int pageSize) {
+        return proizvodRepository.findAll(PageRequest.of(offset,pageSize,Sort.by(Sort.Direction.ASC,field)));
+    }
+
 }

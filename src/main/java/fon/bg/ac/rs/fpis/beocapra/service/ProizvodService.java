@@ -18,4 +18,6 @@ public interface ProizvodService {
 
     Page<ProizvodEntity> getProductsWithPagination(int offset, int pageSize);
 
+    Page<ProizvodEntity> getProductsWithPaginationAndSorting(String field,int offset,int pageSize);
+
 }
