@@ -131,7 +131,9 @@ public class LoadDatabase {
                         proizvod.setHemijskeOsobine(new ArrayList<>());
                         proizvod.setFizickeOsobine(new ArrayList<>());
                         proizvod.setNazivProizvoda("Proizvod" + ind);
-                        proizvod.setDatumProizvodnje(new Date(new java.util.Date().getTime() - 2100 * 60 * 1000));
+                        int days = new Long(Math.round(Math.random() * 30)).intValue();
+                        int hours = new Long(Math.round(Math.random() * 24)).intValue();
+                        proizvod.setDatumProizvodnje(new Date(new java.util.Date().getTime() - hoursAndDaysToMiliseconds(hours,days)));
                         long vrsta_proizvoda = Math.round(Math.random() * 10) + 1;
                         proizvod.setVrstaProizvoda("VRSTA_PROIZVODA_" + vrsta_proizvoda);
                         long zalihe = Math.round(Math.floor(Math.random() * 12000));
@@ -144,6 +146,11 @@ public class LoadDatabase {
                     .collect(Collectors.toList());
             proizvodRepository.saveAll(proizvodEntityList);
         };
+    }
+
+    public static long hoursAndDaysToMiliseconds(int hours, int days) {
+        int _hours = hours + days * 24;
+        return _hours * 60 * 60 * 1000;
     }
 
 }

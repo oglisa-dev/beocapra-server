@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Enumeration;
 
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
@@ -30,6 +31,13 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request,response);
         } else {
             String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+            logger.info("Authorization header: " + authorizationHeader);
+            logger.info("Servlet path: " + request.getServletPath());
+            logger.info("Auth type: " + request.getAuthType());
+            Enumeration<String> headers = request.getHeaderNames();
+            while (headers.hasMoreElements()) {
+                System.out.println(headers.nextElement());
+            }
             if (authorizationHeader != null && authorizationHeader.startsWith(BEARER)) {
                 logger.info("Authorization header exists");
                 try {

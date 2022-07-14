@@ -1,5 +1,7 @@
 package fon.bg.ac.rs.fpis.beocapra.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.Objects;
@@ -26,6 +28,7 @@ public class HemijskaOsobinaEntity {
     @Column(name = "Sastojci")
     private String sastojci;
 
+    @JsonIgnore
     @ManyToOne(
             targetEntity = ProizvodEntity.class,
             fetch = FetchType.LAZY,
