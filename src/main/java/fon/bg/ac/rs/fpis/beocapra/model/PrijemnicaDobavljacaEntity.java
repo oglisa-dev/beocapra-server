@@ -16,7 +16,7 @@ public class PrijemnicaDobavljacaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "PrijemnicaDobavljacaID")
-    private long prijemnicaDobavljacaId;
+    private Long prijemnicaDobavljacaId;
     @Basic
     @Column(name = "DatumPrijema")
     private Date datumPrijema;
@@ -37,24 +37,11 @@ public class PrijemnicaDobavljacaEntity {
     )
     @JoinColumn(name = "RadnikID", nullable = false)
     private RadnikEntity radnik;
-    @OneToOne(
-            targetEntity = TovarniListEntity.class,
-            fetch = FetchType.LAZY,
-            optional = false,
-            orphanRemoval = false,
-            cascade = CascadeType.ALL
-    )
-    @JoinColumn(
-            name = "TovarniListID",
-            nullable = false
-    )
-    private TovarniListEntity tovarniList;
     @OneToMany(
             targetEntity = StavkaPrijemniceDobavljacaEntity.class,
             mappedBy = "prijemnicaDobavljaca",
             fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+            cascade = CascadeType.ALL
     )
     private Collection<StavkaPrijemniceDobavljacaEntity> stavke;
 

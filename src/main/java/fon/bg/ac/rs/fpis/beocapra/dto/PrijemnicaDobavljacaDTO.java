@@ -18,7 +18,6 @@ public class PrijemnicaDobavljacaDTO implements DTO<PrijemnicaDobavljacaEntity>,
     private Long prijemnicaDobavljacaId;
     private Date datumPrijema;
     private String napomena;
-    private TovarniListDTO tovarniList;
     private RadnikDTO radnik;
     private DobavljacDTO dobavljac;
     private Collection<StavkaPrijemniceDobavljacaDTO> stavke;
@@ -27,7 +26,6 @@ public class PrijemnicaDobavljacaDTO implements DTO<PrijemnicaDobavljacaEntity>,
         this.datumPrijema = prijemnica.getDatumPrijema();
         this.prijemnicaDobavljacaId = prijemnica.getPrijemnicaDobavljacaId();
         this.napomena = prijemnica.getNapomena();
-        this.tovarniList = new TovarniListDTO(prijemnica.getTovarniList());
         this.radnik = new RadnikDTO(prijemnica.getRadnik());
         this.dobavljac = new DobavljacDTO(prijemnica.getDobavljac());
         if (prijemnica.getStavke() != null) {
@@ -44,7 +42,6 @@ public class PrijemnicaDobavljacaDTO implements DTO<PrijemnicaDobavljacaEntity>,
         prijemnicaDobavljaca.setPrijemnicaDobavljacaId(this.prijemnicaDobavljacaId);
         prijemnicaDobavljaca.setDatumPrijema(this.datumPrijema);
         prijemnicaDobavljaca.setNapomena(this.napomena);
-        prijemnicaDobavljaca.setTovarniList(this.tovarniList.fromDTO());
         prijemnicaDobavljaca.setRadnik(this.radnik.fromDTO());
         prijemnicaDobavljaca.setDobavljac(this.dobavljac.fromDTO());
         prijemnicaDobavljaca.setStavke(

@@ -10,12 +10,10 @@ import java.util.Objects;
 public class StavkaPrijemniceDobavljacaEntityPK implements Serializable {
     @Column(name = "PrijemnicaDobavljacaID")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long prijemnicaDobavljacaId;
+    private Long prijemnicaDobavljacaId;
     @Column(name = "StavkaPrijemniceDobavljacaID")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long stavkaPrijemniceDobavljacaId;
+    private Long stavkaPrijemniceDobavljacaId;
 
     public long getPrijemnicaDobavljacaId() {
         return prijemnicaDobavljacaId;

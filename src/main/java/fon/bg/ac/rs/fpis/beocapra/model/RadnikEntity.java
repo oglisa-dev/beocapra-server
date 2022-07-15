@@ -1,10 +1,18 @@
 package fon.bg.ac.rs.fpis.beocapra.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 @Table(name = "Radnik", schema = "public", catalog = "beocapra-db")
+@Data
+@AllArgsConstructor @NoArgsConstructor
 public class RadnikEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -30,6 +38,12 @@ public class RadnikEntity {
     @Basic
     @Column(name = "password")
     private String password;
+
+    @Column(name = "roles")
+    @ManyToMany(
+            fetch = FetchType.EAGER
+    )
+    private Collection<Role> roles = new ArrayList<>();
 
     public String getUsername() {
         return username;

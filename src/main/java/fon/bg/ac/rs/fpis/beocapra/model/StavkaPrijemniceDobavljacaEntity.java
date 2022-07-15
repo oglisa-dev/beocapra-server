@@ -14,14 +14,12 @@ import java.util.Objects;
 @IdClass(StavkaPrijemniceDobavljacaEntityPK.class)
 @Data @NoArgsConstructor @AllArgsConstructor
 public class StavkaPrijemniceDobavljacaEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "PrijemnicaDobavljacaID")
-    private long prijemnicaDobavljacaId;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long prijemnicaDobavljacaId;
     @Id
     @Column(name = "StavkaPrijemniceDobavljacaID")
-    private long stavkaPrijemniceDobavljacaId;
+    private Long stavkaPrijemniceDobavljacaId;
     @Basic
     @Column(name = "Kolicina")
     private BigInteger kolicina;

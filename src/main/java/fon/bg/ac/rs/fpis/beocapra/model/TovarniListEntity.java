@@ -23,14 +23,7 @@ public class TovarniListEntity {
     @Basic
     @Column(name = "DatumSlanja")
     private Date datumSlanja;
-    @OneToOne(
-            mappedBy = "tovarniList",
-            optional = true,
-            targetEntity = PrijemnicaDobavljacaEntity.class,
-            fetch = FetchType.LAZY,
-            orphanRemoval = false
-    )
-    private PrijemnicaDobavljacaEntity prijemnicaDobavljaca;
+
 
     public long getTovarniListId() {
         return tovarniListId;

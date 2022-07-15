@@ -23,6 +23,7 @@ public class PrijemnicaDobavljacaController {
     @PostMapping()
     public ResponseEntity<PrijemnicaDobavljacaDTO> create(@RequestBody PrijemnicaDobavljacaDTO prijemnicaDobavljacaDTO) {
         PrijemnicaDobavljacaEntity prijemnicaDobavljaca = prijemnicaDobavljacaDTO.fromDTO();
+        System.out.println(prijemnicaDobavljaca);
         PrijemnicaDobavljacaDTO dto_back = this.service.savePrijemnica(prijemnicaDobavljaca);
         URI uri = URI.create(ServletUriComponentsBuilder
                 .fromCurrentContextPath()

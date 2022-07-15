@@ -25,8 +25,16 @@ public class LoadDatabase {
     @Bean
     CommandLineRunner initDatabase(RadnikService radnikService, TovarniListRepository tovarniListRepository
             , DobavljacRepository dobavljacRepository, TipProizvodaRepository tipProizvodaRepository
-            , JedinicaMereRepository jedinicaMereRepository, ProizvodRepository proizvodRepository) {
+            , JedinicaMereRepository jedinicaMereRepository, ProizvodRepository proizvodRepository,
+                                   RoleRepository roleRepository) {
         return args -> {
+            Role role1 = new Role();
+            role1.setName("USER_ROLE");
+            roleRepository.save(role1);
+            Role role2 = new Role();
+            role2.setName("ADMIN_ROLE");
+            roleRepository.save(role2);
+
             RadnikEntity radnik1 = new RadnikEntity();
             radnik1.setUsername("oglisa");
             radnik1.setPassword("oglisa99");
@@ -34,7 +42,18 @@ public class LoadDatabase {
             radnik1.setBrojRadneKnjizice("1234567");
             radnik1.setImePrezime("Ognjen Simic");
             radnik1.setRadnoMestoId(1L);
+            radnik1.setRoles(List.of(role1,role2));
             log.info("Preloading " + radnikService.saveRadnik(radnik1));
+
+            RadnikEntity radnik2 = new RadnikEntity();
+            radnik2.setUsername("milan");
+            radnik2.setPassword("milan");
+            radnik2.setJmbg("2011989774598");
+            radnik2.setBrojRadneKnjizice("1234567");
+            radnik2.setImePrezime("Milan Mitrovic");
+            radnik2.setRadnoMestoId(1L);
+            radnik2.setRoles(List.of(role1));
+            log.info("Preloading " + radnikService.saveRadnik(radnik2));
 
             TovarniListEntity tovarniList1 = new TovarniListEntity();
             tovarniList1.setDatumSlanja(new java.sql.Date(new java.util.Date().getTime()));

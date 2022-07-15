@@ -22,7 +22,6 @@ public class TovarniListDTO implements DTO<TovarniListEntity>, Serializable {
         this.tovarniListId = tovarniList.getTovarniListId();
         this.napomena = tovarniList.getNapomena();
         this.datumSlanja = tovarniList.getDatumSlanja();
-        this.prijemnicaID = tovarniList.getPrijemnicaDobavljaca().getPrijemnicaDobavljacaId();
     }
 
     @Override

@@ -37,6 +37,9 @@ public class RadnikServiceImpl implements RadnikService, UserDetailsService {
             log.info("User/Radnik found: {}", username);
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        radnik.getRoles().forEach(role -> {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        });
         return new User(radnik.getUsername(), radnik.getPassword(), authorities);
     }
 
