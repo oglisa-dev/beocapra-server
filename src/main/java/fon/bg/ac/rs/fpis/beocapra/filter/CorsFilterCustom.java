@@ -19,7 +19,7 @@ public class CorsFilterCustom implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         ((HttpServletResponse) res).setHeader("Access-Control-Allow-Origin", "*");
         ((HttpServletResponse) res).setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
-        ((HttpServletResponse) res).setHeader("Access-Control-Max-Age", "3600");
+        ((HttpServletResponse) res).setHeader("Access-Control-Max-Age", "9600");
         ((HttpServletResponse) res).setHeader("Access-Control-Allow-Headers", "*");
         chain.doFilter(req, res);
     }

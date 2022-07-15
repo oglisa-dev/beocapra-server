@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/radnik")
@@ -23,6 +24,13 @@ public class RadnikController {
     public ResponseEntity<Collection<RadnikDTO>> getAll() {
         Collection<RadnikDTO> radnici = service.getAll();
         return ResponseEntity.ok().body(radnici);
+    }
+
+    @GetMapping("/{username}")
+    public ResponseEntity<RadnikDTO> getByUsername(@PathVariable String username) {
+        Optional<RadnikDTO> radnikDTO = service.getByUsername(username);
+        if (!radnikDTO.isPresent()) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(radnikDTO.get());
     }
 
 }
