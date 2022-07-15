@@ -61,6 +61,20 @@ public class LoadDatabase {
             dobavljac2.setPib("123456789");
             dobavljac2.setZiroRacun("123-000123123-123");
             dobavljacRepository.save(dobavljac2);
+            List<DobavljacEntity> dobavljacEntityList = IntStream
+                    .rangeClosed(3,10)
+                    .mapToObj(number -> {
+                        DobavljacEntity dobavljac = new DobavljacEntity();
+                        dobavljac.setEmail("dobavljac" + number + "@gmail.com");
+                        dobavljac.setWebsite("www.dobavljac" + number +".example.com");
+                        dobavljac.setMaticniBroj("22222222");
+                        dobavljac.setNazivDobavljaca("Dobavljac" + number);
+                        dobavljac.setPib("123456789");
+                        dobavljac.setZiroRacun("123-000123123-123");
+                        return dobavljac;
+                    })
+                    .collect(Collectors.toList());
+            dobavljacRepository.saveAll(dobavljacEntityList);
 
             TipProizvodaEntity tipProizvoda1 = new TipProizvodaEntity();
             tipProizvoda1.setNazivTipaProizvoda("TIP_PROIZVODA_1");
