@@ -8,6 +8,7 @@ import fon.bg.ac.rs.fpis.beocapra.repository.StavkaPrijemniceDobavljacaRepositor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -20,6 +21,10 @@ public class PrijemnicaDobavljacaServiceImpl implements PrijemnicaDobavljacaServ
     private StavkaPrijemniceDobavljacaRepository repositoryStavka;
 
     @Override
+    @Transactional(
+            value = Transactional.TxType.REQUIRES_NEW,
+            rollbackOn = Exception.class
+    )
     public PrijemnicaDobavljacaDTO savePrijemnica(PrijemnicaDobavljacaEntity prijemnicaDobavljaca) {
         Collection<StavkaPrijemniceDobavljacaEntity> stavke = prijemnicaDobavljaca.getStavke();
         prijemnicaDobavljaca.setStavke(new ArrayList<>());
